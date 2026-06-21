@@ -100,6 +100,12 @@ APP_MEDIA_URL='/files/'
 - [http://127.0.0.1:8000/api/schema/redoc/]() redoc
 
 ## Docker Compose
+Предварительно нужно создать папки:
+- В **files/** будут храниться картинки;
+- В **db/** будут храниться база данных;
+- В **static/** будут храниться статические файлы.
+
+*В репозитории решил пустые папки не плодить*
 
 ## Использование Docker
 ```bash
@@ -161,3 +167,7 @@ docker system prune -f
 - [Spaceso Redoc](https://spaceso.maxano.com/api/schema/redoc/)
 - [Админка Spaceso](https://spaceso.maxano.com/admin/)
 - Пользователь: **test**, пароль: **test**
+
+## Лицензия
+
+[MIT License](https://github.com/maksimtest-lab/backend-capstone-project/blob/main/LICENSE)
