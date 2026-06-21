@@ -36,3 +36,17 @@ class BlogPostSerializer(serializers.ModelSerializer):
             return get_thumbnailer(obj.cover_image)["large"].url
             # return obj.cover_image.url  # относительный путь, без http://127.0.0.1:8000
         return None
+
+
+class BlogPostWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogPost
+        fields = [
+            "title",
+            "slug",
+            "content",
+            "cover_image",
+            "category",
+            "tags",
+            "status",
+        ]

@@ -1,28 +1,50 @@
+from django.db.models import F
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets, filters
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from apps.common.permissions import IsAuthorOrReadOnly
+
 from .models import BlogPost, BlogCategory, BlogTag
 from .serializers import (
     BlogPostSerializer,
+    BlogPostWriteSerializer,
     BlogCategorySerializer,
     BlogTagSerializer,
 )
 
 
-from drf_spectacular.utils import extend_schema, extend_schema_view
-
 @extend_schema_view(
     list=extend_schema(summary="Список блог-постов", tags=["Blog"]),
     retrieve=extend_schema(summary="Получить блог-пост", tags=["Blog"]),
 )
-class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
+class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPost.objects.filter(status="published")
-    serializer_class = BlogPostSerializer
-
     lookup_field = "slug"
     lookup_url_kwarg = "slug"
 
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ["title", "content"]
     ordering_fields = ["created_at", "views"]
+
+    permission_classes = [IsAuthorOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return BlogPostWriteSerializer
+        return BlogPostSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        # Инкремент просмотров
+        BlogPost.objects.filter(pk=instance.pk).update(views=F("views") + 1)
+        instance.refresh_from_db()
+
+        return super().retrieve(request, *args, **kwargs)
 
 @extend_schema(tags=["Blog Categories"])
 class BlogCategoryViewSet(viewsets.ReadOnlyModelViewSet):

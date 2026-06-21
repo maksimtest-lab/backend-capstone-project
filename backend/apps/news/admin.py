@@ -30,6 +30,28 @@ class NewsArticleAdmin(admin.ModelAdmin):
 
     cover_preview.short_description = "Обложка"
 
+    def has_change_permission(self, request, obj=None):
+        # Админ может всё
+        if request.user.is_superuser:
+            return True
+
+        # Если объект не передан — разрешаем (чтобы список показывался)
+        if obj is None:
+            return True
+
+        # Разрешаем менять только свои
+        return obj.author == request.user
+
+    def has_delete_permission(self, request, obj=None):
+        # Админ может всё
+        if request.user.is_superuser:
+            return True
+
+        if obj is None:
+            return True
+
+        return obj.author == request.user
+
     def save_model(self, request, obj, form, change):
         if not obj.pk or not obj.author:
             obj.author = request.user
