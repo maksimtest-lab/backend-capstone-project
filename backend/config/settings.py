@@ -219,7 +219,10 @@ SPECTACULAR_SETTINGS = {
         {"name": "Users", "description": "Регистрация и управление пользователями"},
         {"name": "Auth", "description": "JWT авторизация"},
         {"name": "Blog", "description": "Блог-посты"},
+        {"name": "Blog Categories", "description": "Категории блога"},
+        {"name": "Blog Tags", "description": "Теги блога"},
         {"name": "News", "description": "Новости"},
+        {"name": "News Categories", "description": "Категории новостей"},
     ],
 }
 

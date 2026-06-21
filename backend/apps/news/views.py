@@ -15,6 +15,10 @@ from .serializers import (
 @extend_schema_view(
     list=extend_schema(summary="Список новостей", tags=["News"]),
     retrieve=extend_schema(summary="Получить новость", tags=["News"]),
+    create=extend_schema(summary="Создать новость", tags=["News"]),
+    update=extend_schema(summary="Обновить новость", tags=["News"]),
+    partial_update=extend_schema(summary="Частично обновить новость", tags=["News"]),
+    destroy=extend_schema(summary="Удалить новость", tags=["News"]),
 )
 class NewsArticleViewSet(viewsets.ModelViewSet):
     queryset = NewsArticle.objects.filter(status="published")

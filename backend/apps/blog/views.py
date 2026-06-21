@@ -17,6 +17,10 @@ from .serializers import (
 @extend_schema_view(
     list=extend_schema(summary="Список блог-постов", tags=["Blog"]),
     retrieve=extend_schema(summary="Получить блог-пост", tags=["Blog"]),
+    create=extend_schema(summary="Создать блог-пост", tags=["Blog"]),
+    update=extend_schema(summary="Обновить блог-пост", tags=["Blog"]),
+    partial_update=extend_schema(summary="Частично обновить блог-пост", tags=["Blog"]),
+    destroy=extend_schema(summary="Удалить блог-пост", tags=["Blog"]),
 )
 class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPost.objects.filter(status="published")
