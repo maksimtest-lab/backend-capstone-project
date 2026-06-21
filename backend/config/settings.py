@@ -209,7 +209,7 @@ INSTALLED_APPS += [
 ]
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Capstone Project API",
+    "TITLE": "Spaceso Project API",
     "DESCRIPTION": "API для новостей, блога, пользователей и авторизации.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
