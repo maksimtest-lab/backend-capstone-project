@@ -156,5 +156,8 @@ docker system prune -f
 ## Демо версия приложения
 
 - [Сайт Spaceso](https://spaceso.maxano.com/)
+- [Spaceso OpenAPI](https://spaceso.maxano.com/api/schema/)
+- [Spaceso Swagger](https://spaceso.maxano.com/api/schema/swagger/)
+- [Spaceso Redoc](https://spaceso.maxano.com/api/schema/redoc/)
 - [Админка Spaceso](https://spaceso.maxano.com/admin/)
 - Пользователь: **test**, пароль: **test**
