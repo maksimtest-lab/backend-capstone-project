@@ -1,0 +1,43 @@
+version: "3.11"
+
+services:
+  spaceso_web:
+    build: .
+    volumes:
+      - static_volume:/app/static
+      - ./files:/app/files
+      - ./db:/app/db
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings
+      DB_HOST: 172.17.0.1
+      DB_PORT: 5432
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    entrypoint: /entrypoint_web.sh
+    networks:
+      - spaceso_net
+    restart: unless-stopped
+
+  spaceso_nginx:
+    image: nginx:latest
+    container_name: spaceso_nginx
+    ports:
+      - "8199:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - static_volume:/app/static
+      - ./files:/app/files
+    depends_on:
+      - spaceso_web
+    networks:
+      - spaceso_net
+    restart: unless-stopped
+
+volumes:
+  static_volume:
+
+networks:
+  spaceso_net:
+    driver: bridge
