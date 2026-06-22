@@ -250,3 +250,5 @@ frontend/
 files/
 static/
 *.db
+
+*.code-workspace
