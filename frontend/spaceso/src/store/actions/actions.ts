@@ -1,5 +1,6 @@
 import { SET_PAGE_TITLE, SET_THEME, SET_USERNAME, SET_SEARCH, FETCH_ARTICLES_SUCCESS, FETCH_ARTICLES_FAILURE, SET_BREADCRUMBS, FETCH_ARTICLE_SUCCESS, FETCH_ARTICLE_FAILURE, SET_ARTICLE, LOGIN, LOGOUT, REGISTRATION, GET_AUTH_STATE, SET_NEWS, FETCH_NEWS_FAILURE, FETCH_NEWS_SUCCESS, FETCH_NEWSLIST_FAILURE, FETCH_NEWSLIST_SUCCESS, TOGGLE_MENU } from './actionTypes';
 import { API_ARTICLE_URL, API_ARTICLES_URL, API_NEWS_URL, API_NEWSLIST_URL } from '../../consts/api';
+import { API_REGISTER_URL, API_TOKEN_URL } from "../../consts/api";
 import axios from 'axios';
 import type { Article } from '../../types/articles';
 import type { News } from '../../types/news';
@@ -7,8 +8,6 @@ import type { Route } from '../../types/route';
 import type { RootState } from '../../store';
 import type { ThunkAction } from 'redux-thunk';
 import type { AnyAction } from 'redux';
-
-import { API_TOKEN_URL } from "../../consts/api";
 
 export const setPageTitle = (title: string) => {
   return {
@@ -156,37 +155,57 @@ export const login = (username: string, password: string) => async (dispatch) =>
   }
 };
 
-export const registration = (email: string, password: string): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => async (dispatch) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const { uid, email: userEmail, displayName, photoURL } = userCredential.user;
-      
-      dispatch({
-        type: REGISTRATION,
-        payload: {
-          isAuthenticated: true,
-          user: {
-            uid,
-            email: userEmail,
-            displayName,
-            photoURL
-          },
-          error: null
-        }
-      });
-    } catch (error) {
-      console.error('Registration error:', error);
-      dispatch({
-        type: REGISTRATION,
-        payload: {
-          isAuthenticated: false,
-          user: null,
-          error: error instanceof Error ? error.message : 'Registration failed'
-        }
-      });
-      throw error;
-    }
-  };
+
+export const registration = (email: string, password: string) => async (dispatch) => {
+  try {
+    // 1. Регистрируем пользователя
+    const username = email.split("@")[0]; // можно заменить на отдельное поле
+    await axios.post(API_REGISTER_URL, {
+      username,
+      email,
+      password,
+    });
+
+    // 2. Автоматически логиним
+    const loginRes = await axios.post(API_TOKEN_URL, {
+      username,
+      password,
+    });
+
+    const { access, refresh } = loginRes.data;
+
+    localStorage.setItem("access", access);
+    localStorage.setItem("refresh", refresh);
+
+    dispatch({
+      type: REGISTRATION,
+      payload: {
+        isAuthenticated: true,
+        user: { username, email },
+        error: null,
+      },
+    });
+
+    dispatch({
+      type: LOGIN,
+      payload: {
+        isAuthenticated: true,
+        user: { username, email },
+        error: null,
+      },
+    });
+
+  } catch (error: any) {
+    dispatch({
+      type: REGISTRATION,
+      payload: {
+        isAuthenticated: false,
+        user: null,
+        error: error.response?.data || "Registration failed",
+      },
+    });
+  }
+};
 
 export const logout = ():
   ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
