@@ -188,31 +188,24 @@ export const registration = (email: string, password: string): ThunkAction<Promi
     }
   };
 
-export const logout = (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => 
+export const logout = ():
+  ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
   async (dispatch) => {
-    // try {
-    //   await firebaseSignOut(auth);
-    //   dispatch({
-    //     type: LOGOUT,
-    //     payload: {
-    //       isAuthenticated: false,
-    //       user: null,
-    //       error: null
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.error('Error:', error);
-    //   console.error('Logout error:', error);
-    //   dispatch({
-    //     type: LOGOUT,
-    //     payload: {
-    //       isAuthenticated: false,
-    //       user: null,
-    //       error: error instanceof Error ? error.message : 'An unknown error occurred'
-    //     }
-    //   });
-    // }
+    // 1. Удаляем токены
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+
+    // 2. Сбрасываем Redux состояние
+    dispatch({
+      type: LOGOUT,
+      payload: {
+        isAuthenticated: false,
+        user: null,
+        error: null,
+      },
+    });
   };
+
 
   export const getAuthState = (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => 
     async (dispatch) => {

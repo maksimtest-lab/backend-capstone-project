@@ -5,7 +5,6 @@ import { API_TOKEN_REFRESH_URL } from "../../consts/api";
 export const initAuth = () => async (dispatch) => {
   const access = localStorage.getItem("access");
   const refresh = localStorage.getItem("refresh");
-  console.log(access, refresh);
 
   // нет токенов → пользователь не авторизован
   if (!access || !refresh) {

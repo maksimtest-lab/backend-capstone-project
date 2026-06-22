@@ -1,18 +1,20 @@
-import { useDispatch } from 'react-redux';
 import { setPageTitle, setBreadcrumbs } from '../store/actions/actions';
 import { useEffect } from 'react';
-// import { auth } from '../firebase_';
-// import { signOut } from 'firebase/auth';
 import './userProfilePage.sass';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
-import { useRef } from 'react'; 
-// import { updateUsername } from '../store/actions/actions';
+import { useRef } from 'react';
+import { logout } from "../store/actions/actions";
+import { useAppDispatch } from "../store";
 
 export function UserProfile() {
     const { user } = useSelector((state: RootState) => state.auth);
-    const dispatch = useDispatch();
-    
+    const dispatch = useAppDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
+
     useEffect(() => {
         dispatch(setBreadcrumbs([
             // {url: '/', name: 'Home'},
@@ -48,7 +50,7 @@ export function UserProfile() {
                 </form>
             </div>
             <br></br>
-            <button onClick={() => null}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     )
 }
