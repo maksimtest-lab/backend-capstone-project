@@ -19,6 +19,7 @@ export default function authReducer(state: AuthState = initialState, action: Any
                 error: action.payload.error,
                 loading: false
             };
+
         case LOGIN:
             return {
                 ...state,
