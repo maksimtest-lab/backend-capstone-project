@@ -1,0 +1,32 @@
+.pagination
+    display: flex
+    justify-content: space-between
+    align-items: center
+    gap: 10px
+    margin: 50px 0 0
+
+    &Button
+        color: #313037
+        text-decoration: none
+        font-weight: 500
+        font-size: 16px
+        display: flex
+        align-items: center
+        gap: 5px
+
+        &.active
+            color: #6C1BDB
+
+        &.notActive
+            color: #80858B
+            cursor: not-allowed
+            pointer-events: none
+        
+
+    &Buttons
+        display: flex
+        gap: 30px
+
+    &Stats
+        font-size: 14px
+        opacity: 0.5

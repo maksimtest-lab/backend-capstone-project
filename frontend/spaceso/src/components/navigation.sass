@@ -1,0 +1,46 @@
+.navigation
+    margin-bottom: 60px
+    border-bottom: solid 1px #E0E0E0
+
+    ul
+        padding: 0
+        margin: 0
+        list-style: none
+        display: flex
+        gap: 40px
+
+        li
+            
+            &:last-child
+                margin-bottom: 0
+
+            a
+                display: flex
+                align-items: center
+                gap: 10px
+                font-weight: 500
+                font-size: 18px
+
+                text-decoration: none
+                color: #80858B
+                padding: 40px 30px
+                border-bottom: solid 2px transparent
+
+                svg
+                    //margin-right: 17px  
+
+                &.active
+                    color: #7B61FF
+                    border-bottom: solid 2px #313037
+
+
+    &.dark
+        border-bottom: solid 1px #fff
+
+        ul
+            li
+                a
+                    color: #fff
+
+                    &.active
+                        border-bottom: solid 2px #fff

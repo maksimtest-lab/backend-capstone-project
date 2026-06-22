@@ -14,13 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-from django.contrib import admin
-from django.urls import path, include
-from django.utils.safestring import mark_safe
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, re_path, include
+from django.utils.safestring import mark_safe
+from django.views.generic import TemplateView
 
 # from rest_framework_simplejwt.views import (
 #     TokenObtainPairView,
@@ -89,13 +88,18 @@ urlpatterns = [
 
     # Users API
     path("api/v1/users/", include("apps.users.urls")),
-]
-
-urlpatterns += [
     path("api/v1/blog/", include("apps.blog.urls")),
     path("api/v1/news/", include("apps.news.urls")),
+
+
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Для React
+urlpatterns += [
+    re_path(r'^.*$', TemplateView.as_view(template_name="index.html")),
+]

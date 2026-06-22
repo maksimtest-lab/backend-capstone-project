@@ -1,0 +1,35 @@
+.mobileMenu
+    padding: 20px
+    display: none
+
+    &Head
+        display: flex
+        justify-content: space-between
+        align-items: center
+        gap: 20px
+        margin-bottom: 30px
+
+        svg
+            cursor: pointer
+            transform: translateX(-10px)
+            transition: transform 0.3s ease
+
+            
+
+    &.dark
+        .mobileMenuHead
+            svg
+                fill: #fff
+
+    @media (max-width: 600px)
+        display: flex
+        flex-direction: column
+        gap: 20px
+
+        .searchBar
+            display: flex
+            margin-bottom: 20px
+        
+        .userBar
+            display: block
+            padding: 0

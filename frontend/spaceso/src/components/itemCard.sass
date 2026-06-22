@@ -1,0 +1,63 @@
+.itemCard
+    display: flex
+    flex-direction: column
+    gap: 10px
+    width: 352px
+    background-color: #fff
+    border-radius: 15px
+    overflow: hidden
+    flex-shrink: 0
+    max-width: 100%
+
+    a
+        text-decoration: none
+
+    &Image
+        width: 100%
+        height: 208px
+        background-size: cover
+        position: relative
+
+        &::before
+            content: ''
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            background: linear-gradient(130deg, #4D0AC7 0%, #912EF2 100%)
+            opacity: 0.6
+            transition: opacity 0.3s ease
+            
+
+    &:hover
+        cursor: pointer
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1)
+
+        .itemCardImage
+            &::before
+                opacity: 0
+
+    &Date
+        color: #313037
+        font-size: 16px
+        opacity: 0.5
+
+    &Title
+        font-size: 18px
+        font-weight: 600
+        color: #313037
+
+    &Content
+        padding: 30px 20px
+
+
+    &.dark
+        background-color: rgba(0, 0, 0, 0.5)
+        
+        .itemCard
+            &Date
+                color: #fff
+
+            &Title
+                color: #fff

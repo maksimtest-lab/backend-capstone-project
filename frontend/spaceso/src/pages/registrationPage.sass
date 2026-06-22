@@ -1,0 +1,75 @@
+.registrationPage, .loginPage
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+
+    &Form
+        background: #fff
+        padding: 20px
+        border-radius: 15px
+        padding: 40px
+        width: 544px
+        max-width: 100%
+
+        &Group
+            margin-bottom: 20px
+
+        label
+            display: block
+            margin-bottom: 10px
+            
+        input[type="text"], input[type="password"]
+            padding: 10px
+            border-radius: 5px
+            border: solid 1px #EBEBEB
+            display: flex
+            align-items: center
+            width: 100%
+            background: #fff
+            font-family: 'Inter', sans-serif
+            font-size: 16px
+            
+
+            &::placeholder
+                font-family: 'Inter', sans-serif
+                font-size: 16px
+
+        button
+            padding: 10px
+            border-radius: 5px
+            border: none
+            background: #6C1BDB
+            color: #fff
+            font-weight: 500
+            font-size: 16px
+            cursor: pointer
+            margin-bottom: 10px
+
+            &:hover
+                background: #550ECC
+            
+            
+        form
+            display: flex
+            flex-direction: column
+            gap: 10px
+
+        p
+            color: #8D8E97
+            text-align: center
+
+            &.error
+                color: red
+
+        &.dark
+            background: #45444B
+            color: #fff
+
+            input[type="text"], input[type="password"]
+                background: #57565D
+                border-color: transparent
+                color: #fff
+
+                &::placeholder
+                    color: #ABAAAE

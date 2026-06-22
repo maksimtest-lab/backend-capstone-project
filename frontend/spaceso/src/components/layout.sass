@@ -1,0 +1,57 @@
+.layout
+    background-color: #F3F3F3
+    min-height: 100vh
+    //display: flex
+    flex-direction: column
+    gap: 30px
+
+    * 
+        transition: all 0.3s ease
+
+    main
+        display: flex
+        flex-direction: column
+        //gap: 40px
+        padding: 20px 30px
+        max-width: 1120px
+        margin: 0 auto
+        flex-shrink: 0
+        flex-grow: 1
+        //width: 100%
+        flex-grow: 1
+        flex-basis: 100%
+
+    footer
+        color: #929295
+        margin-top: auto
+        max-width: 1120px
+        margin: 0 auto
+        padding: 20px 30px
+        font-size: 16px
+
+        display: flex
+        justify-content: space-between
+        align-items: center
+        flex-shrink: 0
+        flex-grow: 1
+        flex-basis: 100%
+        border-top: solid 1px #E0E0E0
+        margin-top: 50px
+        gap: 10px
+        //width: 100%
+
+
+    &.dark
+        background-color: #313037
+
+        footer
+            color: #fff
+
+
+    @media (max-width: 600px)
+        main
+            padding: 20px
+
+        footer
+            padding: 20px
+            

@@ -1,0 +1,21 @@
+.menuButton
+    display: none
+
+    button
+        border: none
+        background-color: transparent
+        cursor: pointer
+        color: #313037
+        font-size: 24px
+        padding: 16px
+        height: 56px
+        display: flex
+        align-items: center
+        justify-content: center
+
+    &.dark
+        button
+            color: #fff
+
+    @media (max-width: 600px)
+        display: block

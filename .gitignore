@@ -246,9 +246,9 @@ docs/
 hw-todo-app/.envrc
 *.cache
 
-frontend/
+# frontend/
 files/
-static/
+# static/
 *.db
 
 *.code-workspace
