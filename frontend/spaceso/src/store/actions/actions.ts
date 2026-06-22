@@ -8,6 +8,8 @@ import type { RootState } from '../../store';
 import type { ThunkAction } from 'redux-thunk';
 import type { AnyAction } from 'redux';
 
+import { API_TOKEN_URL } from "../../consts/api";
+
 export const setPageTitle = (title: string) => {
   return {
     type: SET_PAGE_TITLE,
@@ -120,38 +122,39 @@ export const setArticle = (article: Article | null) => {
     payload: article
   };
 };
-  
-export const login = (email: string, password: string): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => async (dispatch) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const { uid, email: userEmail, displayName, photoURL } = userCredential.user;
-      
-      dispatch({
-        type: LOGIN,
-        payload: {
-          isAuthenticated: true,
-          user: {
-            uid,
-            email: userEmail,
-            displayName,
-            photoURL
-          },
-          error: null
-        }
-      });
-    } catch (error) {
-      console.error('Login error:', error);
-      dispatch({
-        type: LOGIN,
-        payload: {
-          isAuthenticated: false,
-          user: null,
-          error: error instanceof Error ? error.message : 'Login failed'
-        }
-      });
-      throw error;
-    }
-  };
+
+export const login = (username: string, password: string) => async (dispatch) => {
+  try {
+    const response = await axios.post(API_TOKEN_URL, {
+      username,
+      password,
+    });
+
+    const { access, refresh } = response.data;
+
+    // сохраняем токены
+    localStorage.setItem("access", access);
+    localStorage.setItem("refresh", refresh);
+
+    dispatch({
+      type: LOGIN,
+      payload: {
+        isAuthenticated: true,
+        user: { username },
+        error: null,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGIN,
+      payload: {
+        isAuthenticated: false,
+        user: null,
+        error: "Invalid username or password",
+      },
+    });
+  }
+};
 
 export const registration = (email: string, password: string): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => async (dispatch) => {
     try {
@@ -338,7 +341,7 @@ export const fetchNews = (slug: string) => {
   return async (dispatch: any) => {
     dispatch(setNews(null));
     console.log(slug);
-    
+
     try {
       const response = await axios.get(API_NEWS_URL.replace(':slug', slug));
       dispatch(fetchNewsSuccess(response.data));
